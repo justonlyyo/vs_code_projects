@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/d3.min.js"></script>
+    <title>Hello World</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var last_names = ["三", "四", "五", "六", "七"];
+    var first_names = ['赵', '钱', '孙', '李', '王'];
+    var citys = ['上海', '北京', '杭州', '广州', '武汉'];
+    var get_last_name = function() {
+        if (last_names.length === 0) {
+            last_names = ["三", "四", "五", "六", "七"];
+        }
+        if (last_names.length == 1) {
+            var name = last_names[0];
+            last_names = [];
+            return name;
+        } else {
+            var index = Math.round(Math.random() * (last_names.length - 1));
+            var name = last_names[index];
+            last_names.splice(index, 1);
+            return name;
+        }
+    };
+    var get_fist_name = function() {
+        if (first_names.length === 0) {
+            first_names = ['赵', '钱', '孙', '李', '王'];
+        }
+        if (first_names.length == 1) {
+            var name = first_names[0];
+            first_names = [];
+            return name;
+        } else {
+            var index = Math.round(Math.random() * (first_names.length - 1));
+            var name = first_names[index];
+            first_names.splice(index, 1);
+            return name;
+        }
+    };
+    var get_city = function() {
+        if (citys.length === 0) {
+            citys = ['上海', '北京', '杭州', '广州', '武汉'];
+        }
+        if (citys.length == 1) {
+            var city = citys[0];
+            citys = [];
+            return city;
+        } else {
+            var index = Math.round(Math.random() * (citys.length - 1));
+            var city = citys[index];
+            citys.splice(index, 1);
+            return city;
+        }
+    };
+    var get_born_year = function() {
+        return 1980 + Math.round(Math.random() * 10);
+    };
+    var get_name = function() {
+        return get_fist_name() + get_last_name();
+    };
+    var get_person = function(_id) {
+        return {
+            "id": _id,
+            "name": get_name(),
+            "year": get_born_year(),
+            "city": get_city()
+        };
+    };
+
+    var persons = [];
+    for (let i = 1; i < 6; i++) {
+        persons.push(get_person(i));
+    }
+</script>
+
+</html>

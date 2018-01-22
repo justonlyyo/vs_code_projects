@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheep" href="css/index.css">
+    <script src="js/index.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    #btn_01 {
+        margin-top: 100px;
+        margin-left: 100px;
+    }
+</style>
+
+<body>
+    <h1>hello world</h1>
+    <img src="image/demo.png">
+    <button id="btn_01" class="btn default">下</button>
+</body>
+<script>
+    var conf = {
+        html: true,
+        placement: "bottom",
+        trigger: "hover",
+        content: `<div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h3>Hello World!</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ul>
+                                <li>的方法地方地方</l1>
+                                <li>的方法地方地方</l1>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`
+    };
+    $("#btn_01").popover(conf);
+</script>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" id="my_file">
+    <input type="button" id="submit_btn" value="upload">
+</body>
+<script>
+    var file_item = document.getElementById("my_file");
+    var btn_item = document.getElementById("submit_btn");
+    btn_item.onclick = function() {
+        if (file_item.files[0]) {
+            var form = new FormData();
+            form.append("file", file_item.files[0]);
+            var req = new XMLHttpRequest();
+            var call_back = function() {
+                if (req.readyState == 4) {
+                    var res = JSON.parse(req.response);
+                    console.log(res);
+                } else {
+                    console.log(req.readyState);
+                }
+            };
+            req.onreadystatechange = call_back; // 设置回调
+            req.open("post", "/upload");
+            req.send(form);
+
+        } else {
+            alert("请先选择需要上传的文件!");
+        }
+    };
+</script>
+
+</html>

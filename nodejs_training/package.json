@@ -1,0 +1,5 @@
+{
+    "name": "tcp_server",
+    "description": "简单的直播室服务端程序",
+    "version": "0.0.1"
+}

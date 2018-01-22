@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/search.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/iconfont.js"></script>
+    <script src="js/common.js"></script>
+    <title>Result</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        <div class="row top_row">
+            <div class="small_login col-lg-1 col-md-1 col-sm-2 hidden-xs">
+                <img class="image img-responsive center-block" src="image/img_xiao.png">
+            </div>
+            <div class="col-lg-10 col-md-10  col-sm-8 col-xs-12">
+                <div class="input_outer">
+                    <input type="text" id="keyword">
+                    <i id="search_btn" class="my_icon icon-search icon"></i>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1  col-sm-2 hidden-xs">
+                <div class="top_right_btn_group">
+                    <i class="my_icon icon-th icon-2x"></i>
+                    <button type="button" id="login_btn" class="btn btn-default btn-primary">登录</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row left_row">
+            <div class="col-lg-1 col-md-1  col-sm-2 hidden-xs">
+
+            </div>
+            <div class="show_zone col-lg-6 col-md-6  col-sm-8 col-xs-12">
+
+                <div class="row count_row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div id="count_di">找到约<span id="count_result">1344334</span>条结果. (用时间约<span id="query_time">0.01</span>秒)</div>
+                    </div>
+                </div>
+
+                <div class="row main_row">
+                    <div id="main_col" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!--底部-->
+        <div class="row">
+            <div class="my_bottom col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <nav id="my_pages" aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="bottom col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <span>版权所有: 上海苏秦网络技术有限公司</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--底部-->
+
+    </div>
+
+</body>
+<script src="js/search.js"></script>
+<script src="js/echarts.min.js"></script>
+
+</html>

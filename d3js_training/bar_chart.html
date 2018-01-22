@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/d3.min.js"></script>
+    <title>柱装图</title>
+</head>
+
+<body>
+    <h1>柱装图</h1>
+    <button type='botton' onclick='my_sort()'>排序</button>
+    <button type='button' onclick='add()'>增加数据</button>
+    <div class="no1"></div>
+</body>
+<script>
+    var data = [];
+    for (let i = 0; i < 8; i++) {
+        let base = 50;
+        let delta = Math.round(Math.random() * 30);
+        if (delta % 2 === 0) {
+            data.push(50 + delta);
+        } else {
+            data.push(50 - delta);
+        }
+    }
+    var height = 300;
+    var width = 400;
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+    var padding = {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20
+    };
+    var rect_step = 35;
+    var rect_width = 30;
+    var rects = svg.selectAll("rect").data(data).enter().append("rect").attr("fill", "steelblue").attr("x", function(item, index) {
+        return padding.left + index * rect_step;
+    }).attr("y", function(item, index) {
+        return height - padding.bottom - item;
+    }).attr("width", rect_width).attr("height", function(item) {
+        return item;
+    });
+    draw_text = function(obj) {
+        var res = obj.attr("fill", "white").attr("font-size", "14px").
+        attr("text-anchor", "middle").attr("x", function(item, index) {
+            return padding.left + index * rect_step;
+        }).attr('y', function(item) {
+            return height - padding.bottom - item;
+        }).attr("dx", rect_width / 2).attr("dy", "1rem").text(function(item) {
+            return item;
+        });
+    };
+    draw_text(svg.selectAll("text").data(data).enter().append("text"));
+
+    var draw = function(new_data) {
+        var update_rect = svg.selectAll("rect").data(new_data);
+        var enter_rect = update_rect.enter();
+        var exit_rect = update_rect.exit();
+        update_rect.attr("fill", "steelblue").attr("x", function(item, index) {
+            return padding.left + index * rect_step;
+        }).
+        attr("y", function(item) {
+            return height - padding.bottom - item;
+        }).attr("width", rect_width).attr("height", function(item) {
+            return item;
+        });
+        enter_rect.append("rect").attr("fill", "steelblue").attr("x", function(item, index) {
+            return padding.left + index * rect_step;
+        }).
+        attr("y", function(item) {
+            return height - padding.bottom - item;
+        }).attr("width", rect_width).attr("height", function(item) {
+            return item;
+        });
+        exit_rect.remove();
+        var update_text = svg.selectAll("text").data(new_data);
+        var enter_text = update_text.enter();
+        var exit_text = update_text.exit();
+        draw_text(update_text);
+        draw_text(enter_text.append("text"));
+        exit_text.remove();
+    };
+    my_sort = function() {
+        data.sort(d3.ascending);
+        draw(data);
+    };
+</script>
+
+</html>

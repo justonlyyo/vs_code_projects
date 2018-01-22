@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/d3.min.js"></script>
+    <title>Hello World</title>
+</head>
+<style>
+    .example_div {
+        width: 300px;
+        padding: 0.2rem 1rem;
+        border: 1px solid salmon;
+        border-radius: 1rem;
+    }
+</style>
+
+<body>
+    <div class="example_div">
+        <p class="example_01">Fire</p>
+        <p class="example_01">Water</p>
+        <p class="example_01">Wind</p>
+    </div>
+    <div class="example_div">
+        <p class="example_02">Loin</p>
+        <p class="example_02">Tiger</p>
+        <p class="example_02">Leopard</p>
+    </div>
+    <div class="example_div">
+        <p class="example_03">Loin</p>
+        <p class="example_03">Tiger</p>
+        <p class="example_03">Leopard</p>
+    </div>
+    <div class="example_div_x">
+
+    </div>
+</body>
+<script>
+    var p_01 = d3.select("body").selectAll(".example_01");
+    p_01.datum("hello world");
+    p_01.text(function(a, b) {
+        var astr = `a=${a}, b=${b}`;
+        return astr;
+    });
+
+    var p_02 = d3.select("body").selectAll(".example_02");
+    var list_01 = [{
+        "id": 0,
+        "name": "jack"
+    }, {
+        "id": 1,
+        "name": "jack1"
+    }, {
+        "id": 2,
+        "name": "jack2"
+    }];
+    var list_02 = [{
+        "id": 2,
+        "name": "jack33"
+    }, {
+        "id": 0,
+        "name": "jack000"
+    }, {
+        "id": 1,
+        "name": "jack111"
+    }];
+    var p_02 = d3.selectAll(".example_02");
+    p_02.data(list_01).text(function(item, index) {
+        return item['name'];
+    });
+
+    setTimeout(function() {
+        p_02.data(list_02, function(item) {
+            console.log(item);
+            return item["id"];
+        }).text(function(item, index) {
+            return item['name'];
+        });
+    }, 5000);
+    var random_list = new Array();
+    for (let i = 0; i < 5; i++) {
+        random_list.push(Math.random());
+    }
+    var a_item = document.createElement("p");
+    d3.select(".example_div_x").selectAll("p").data(random_list).enter().append("p").style("color", "red").text("df");
+
+    var martix = [
+        [101, 102, 103],
+        [201, 202, 203],
+        [301, 302, 303]
+    ];
+</script>
+
+</html>

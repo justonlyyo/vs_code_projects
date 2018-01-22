@@ -1,0 +1,113 @@
+    <!DOCTYPE html>
+    <html lang="zh-cn">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <title>Document</title>
+    </head>
+    <style>
+    body{
+        background-color: lightgrey;
+        font-size:14px;
+    }
+    #main_zone{
+        background-color: white;
+        padding-top:2rem;
+    }
+    .questions{
+        font-size:1.6rem;
+    }
+    .options{
+        margin-bottom:1rem; 
+    }
+    .options input{
+        margin-right:1rem;
+    }
+    .options label{
+        /* font-weight: normal !important; */
+        font-size: 1rem;
+    }
+    .title{
+        padding: 0;
+        margin: 0;
+    }
+    h2{
+        text-align: center;
+        color:#3385ff;
+        line-height: 4rem;
+        background-color: white;
+    }
+    </style>
+    <body>
+        <div class="container-fluid">              
+            <div class="row">
+                <div class='row title'>
+                    <div class='title col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                        <h2 class="title">苏秦网络前端工程师面试题</h2>
+                    </div>
+                </div>
+                <div id="main_zone" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+    
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+    $(function(){
+        let select_questions = [
+            {"question":"javascript是一种____语言.","options":["动态弱类型", "动态强类型", "静态弱类型", "静态强类型"]},
+            {"question": "javascript中的Promise特性,是在____规范中首次定义的.", "options":["ES5", "ES5.1", "ES6", "ES7"]},
+            {"question": "下面框架中,一般来说___是用来直接操作DOM对象的.", "options":["react", "angular", "vue", "jquery"]},
+            {"question": "有关bootstrap规范的描述,下面正确的是____", "options":["container类可以用在html标签内的任何地方", "使用媒体查询不能改变lg/md/sm/xs的分界点", "栅格系统中超过12列的部分会被自动隐藏", "bootstrap是移动端优先的框架"]},
+            {"question": "下面有关jquery的描述,错误的是____.", "options":["jquery的选择器是css3的选择器的超集", "$.extend和$.fn.extend都可以扩展jquery的函数", "animate函数可以创建CSS动画", "一次选择多个id的时候,每个'#id'之间使用英文逗号分割"]},
+            {"question": "有关node.js的描述,不正确的是____", "options":["基于V8引擎", "事件驱动的阻塞式IO模型", "npm是node.js常用的包管理器", "node.js可以直接操作数据库进行CRUD操作"]},
+            {"question": "有关get和post的描述,不正确的是____", "options":["get请求会被浏览器缓存", "post的参数不会显示在浏览器地址栏中", "上传图片只能用post方法", "get参数长度受浏览器限制"]},
+            {"question": "下面_____方法/技术,不需要每次发送数据前都进行三次握手.", "options":["get", "post", "put", "web-socket"]},
+            {"question": "有关相对路径的描述,下面____是正确的", "options":["../sub/a.jpg和/sub/a.jpg的含义相同", "./sub/a.jpg和sub/a.jpg的含义相同", "../sub/a.jpg和./sub/a.jpg的含义相同", "./sub/a.jpg和/sub/a.jpg的含义相同"]},
+            {"question": "var a = {name:jack};把转为json的方法是:", "options":["JSON.ValueOf(a)", "JSON.parse(a)", "JSON.parseOf(a)", "JSON.stringify(a)"]},
+            {"question": "可以向服务端发送post请求的是方法:____", "options":["$.post()", "XMLHttpRequest", "fetch()", "以上全部"]},
+            {"question": "有关前端动画的描述,下列错误的是____", "options":["css动画本身没有事件的概念", "svg动画可以很方便的定义事件触发器", "canvas没法定义内部的元素的事件", "js动画也是依赖css完成的"]},
+            {"question": "有关类型转换,以下___转换为布尔值后为false", "options":["数字 1", "数字 0", "字符串 1", "字符串 0"]},
+            {"question": "以下哪一中框架,不适合用来制作可视化图表:____", "options":["Cocos2D", "HeightCharts", "Echarts", "D3.js"]},
+            ];
+
+        let package_item = function(i, item_dict){
+            // 把一个item字典包装成一行元素
+            let html = `<div class='row'>
+                            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                                <div class='row'>
+                                        <div class='questions col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                                        ${i}. ${item_dict['question']}
+                                        </div>
+                                </div>
+                                <div class='row options'>
+                                        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-6'>
+                                            <label><input type='checkbox' data-select='a'/>A. ${item_dict['options'][0]}</label>
+                                        </div>
+                                        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-6'>
+                                            <label><input type='checkbox' data-select='b'/>B. ${item_dict['options'][1]}</label>
+                                        </div>
+                                        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-6'>
+                                            <label><input type='checkbox' data-select='c'/>C. ${item_dict['options'][2]}</label>
+                                        </div>
+                                        <div class='col-lg-3 col-md-3 col-sm-3 col-xs-6'>
+                                            <label><input type='checkbox' data-select='d'/>D. ${item_dict['options'][3]}</label>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>`;
+            return html;          
+        };
+
+        let inner_html = '';
+        for(let i in select_questions){
+            inner_html += package_item(parseInt(i) + 1, select_questions[i]);
+        }
+        $("#main_zone").append(inner_html);
+    });
+    </script>
+    </html>

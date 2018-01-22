@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="main_zone" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
+                            sagittis lacus vel augue laoreet rutrum faucibus.">
+                            Popover on 底部
+                            </button>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <span class="btn btn-default" data-toggle="popover">测试</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function() {
+        let popover_options = {
+            // 更详细的说明请参看文档.
+            container: "body",
+            placement: "bottom", // 弹出方向
+            title: "我是标题", // 弹出框标题
+            content: "<h1>我是详细内容</h1>", // 弹出框内容
+            html: true, // 插入的是文本还是html
+            trigger: "hover", // 触发方式
+            delay: 200 // 延时,单位毫秒
+        };
+        $('[data-toggle="popover"]').popover(popover_options);
+    });
+</script>
+
+</html>
