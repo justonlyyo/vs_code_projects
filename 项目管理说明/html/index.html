@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script>
+        let token = sessionStorage.getItem("token");
+        // 设置请求头
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                console.log(xhr);
+                console.log(settings);
+                console.log(this);
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
+                    xhr.setRequestHeader("Authorization", token);  // 设置标准请求头
+                    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                    console.log("请求头设置完毕")
+                }
+                else{
+                    console.log("无法设置请求头")
+                }
+            }
+        });
+        // 请求本页数据
+        $.post("http://127.0.0.1:8001/show_task", function(resp){
+            let json = JSON.parse(resp);
+            console.log(json);
+        });
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>hello world</h1>
+</body>
+</html>
