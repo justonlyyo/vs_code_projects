@@ -1,0 +1,11 @@
+package com.test.fuelDemo;
+
+public interface FuelFilterCallback {
+	
+	/**
+	 * 油感数据处理回调
+	 * @param fuelData
+	 */
+	void doCallBack(FuelData fuelData);
+
+}

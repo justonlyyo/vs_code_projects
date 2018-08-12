@@ -1,0 +1,141 @@
+package com.test.fuelDemo;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class FuelFilter {
+	
+	private Map<String, List<FuelData>> fuelCache = new ConcurrentHashMap<String, List<FuelData>>();//需要处理的缓存
+	
+	private static double THRESHOLD = 2;//单位cm 该范围之内为正常
+	
+	private static int NORMAL = 0;//正常
+	
+	private static int ABNORMAL = 1;//不正常
+	
+	private static int MAX_CACHE_NUM = 20;//最大缓存数
+	
+	private static int EX_THRESHOLD = 5;//单位cm 油耗异常，需要二次验证
+	
+	private static int REPEAT_TIME = 20 * 60 * 1000;//过滤20分钟内重复的数据
+	
+	public void doFilter(FuelData fuelData,FuelFilterCallback fuelFilterCallback){
+		//油量液位值<=0,标识为异常
+		 if(fuelData.getLiquid() <= 0){
+			 fuelData.setIsNormal(ABNORMAL);
+			 fuelFilterCallback.doCallBack(fuelData);
+			 return;
+		 }
+		List<FuelData> fuelDataList = fuelCache.get(fuelData.getVehicleId());
+		if(fuelDataList == null){
+			fuelDataList = new ArrayList<FuelData>();
+			fuelCache.put(fuelData.getVehicleId(), fuelDataList);
+		}
+		//第一个点，直接缓存不处理
+		if(fuelDataList.size() == 0){
+			fuelDataList.add(fuelData);
+		}else{//非第一个点，需要处理
+			FuelData lastFuelData = fuelDataList.get(fuelDataList.size() - 1);
+			 //液位值相同， 产生时间在5分钟之内，则标识为异常
+			 if(fuelData.getLiquid() == lastFuelData.getLiquid() && (fuelData.getCreatTime().getTime() - lastFuelData.getCreatTime().getTime()) <= REPEAT_TIME){
+				 fuelData.setIsNormal(ABNORMAL);
+				 fuelFilterCallback.doCallBack(fuelData);
+				 return;
+			 }
+			//油感缓存上个点状态是否为正常,不为空即表示正常
+			if(lastFuelData.getIsNormal() != null){
+				//上报的点与缓存中的点计算差值(+-1cm)
+				if(Math.abs(fuelData.getLiquid() - lastFuelData.getLiquid()) <= THRESHOLD){
+					fuelDataList.remove(lastFuelData);
+					fuelData.setIsNormal(NORMAL);
+					fuelFilterCallback.doCallBack(lastFuelData);
+				}
+				fuelDataList.add(fuelData);
+			}else{
+				//缓存中的点是否>=3个
+				if(fuelDataList.size() < 3){
+					fuelDataList.add(fuelData);
+				}else{
+					int continueCnt = 0;
+					if(Math.abs(fuelData.getLiquid() - lastFuelData.getLiquid()) <= THRESHOLD){
+						continueCnt++;
+						for(int i = fuelDataList.size() - 1; i >= fuelDataList.size() - 2; i--){
+							if(Math.abs(fuelDataList.get(i).getLiquid() - fuelDataList.get(i - 1).getLiquid()) <= THRESHOLD){
+								continueCnt++;
+							}
+						}
+					}
+					//连续3个相邻差值(+-1cm)
+					if(continueCnt >= 3){
+						fuelData.setIsNormal(NORMAL);//当前点设置为正常
+						FuelData lastNormalFuelData = fuelData;//最近一个正常点
+						FuelData curFuelData = null;
+						for(int i = fuelDataList.size() - 1; i >= 0; i--){
+							curFuelData = fuelDataList.get(i);
+							//有正常点表示后面已经无需判断，同时正常点已为最后一个点,不为空同样表示正常(不为空只有正常一种情况)
+							if(curFuelData.getIsNormal() != null){
+								//二次判断，第一个正常点与第二个正常点差值是否过大
+								if(Math.abs(curFuelData.getLiquid() - lastNormalFuelData.getLiquid()) > EX_THRESHOLD){
+									//第二个正常点是否
+									if(Math.abs(lastNormalFuelData.getLiquid() - lastNormalFuelData.getRealTimeVal()) > THRESHOLD){
+										for(int j = fuelDataList.size() - 1; j >= 1; j--){
+											fuelDataList.get(j).setIsNormal(ABNORMAL);
+										}
+										fuelData.setIsNormal(ABNORMAL);
+									}
+								}
+								break;
+							}
+							//相邻差值在(+-1cm)
+							if(Math.abs(lastNormalFuelData.getLiquid() - curFuelData.getLiquid()) <= THRESHOLD){
+								lastNormalFuelData = curFuelData;//最后一个正常点为前一个点
+								lastNormalFuelData.setIsNormal(NORMAL);
+							}else{
+								curFuelData.setIsNormal(ABNORMAL);
+							}
+						}
+						//当前点是否为异常
+						if(fuelData.getIsNormal() == ABNORMAL){
+							//将缓存中的点存入数据库
+							for(int i = 1; i < fuelDataList.size() - 1; i++){
+								fuelFilterCallback.doCallBack(fuelDataList.get(i));
+							}
+							lastNormalFuelData = fuelDataList.get(0);
+							//将当前点存入数据库
+							fuelFilterCallback.doCallBack(fuelData);
+							//将缓存中的点移除
+							fuelDataList.clear();
+							//将第一个正常点重新存入队列中
+							fuelDataList.add(lastNormalFuelData);
+						}else{
+							//将缓存中的点存入数据库
+							for(int i = 0; i < fuelDataList.size() - 1; i++){
+								fuelFilterCallback.doCallBack(fuelDataList.get(i));
+							}
+							//将缓存中的点移除
+							fuelDataList.clear();
+							//将当前点存入缓存队列
+							fuelDataList.add(fuelData);
+						}
+					}else{
+						//缓存中累计点是否达到阀值数量
+						if(fuelDataList.size() >= MAX_CACHE_NUM){
+							FuelData preSaveFuelData = fuelDataList.remove(0);//从缓存中移除第一个点
+							fuelDataList.add(fuelData);//将最新上报点写入缓存中
+							//如果缓存中的第一个点状态为空，则设置为异常
+							if(preSaveFuelData.getIsNormal() == null){
+								preSaveFuelData.setIsNormal(ABNORMAL);
+							}
+							fuelFilterCallback.doCallBack(preSaveFuelData);//将第一个点写入数据库中
+						}else{
+							fuelDataList.add(fuelData);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+}

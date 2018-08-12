@@ -1,0 +1,47 @@
+package com.test.fuelDemo;
+
+import java.util.Date;
+
+public class FuelData {
+	
+	private String vehicleId = "123";
+	
+	private double liquid;
+	
+	private Date creatTime;
+	
+	private Integer isNormal;
+
+	public double getLiquid() {
+		return liquid;
+	}
+
+	public void setLiquid(double liquid) {
+		this.liquid = liquid;
+	}
+
+	public Date getCreatTime() {
+		return creatTime;
+	}
+
+	public void setCreatTime(Date creatTime) {
+		this.creatTime = creatTime;
+	}
+
+	public Integer getIsNormal() {
+		return isNormal;
+	}
+
+	public void setIsNormal(Integer isNormal) {
+		this.isNormal = isNormal;
+	}
+
+	public String getVehicleId() {
+		return vehicleId;
+	}
+
+	public void setVehicleId(String vehicleId) {
+		this.vehicleId = vehicleId;
+	}
+
+}

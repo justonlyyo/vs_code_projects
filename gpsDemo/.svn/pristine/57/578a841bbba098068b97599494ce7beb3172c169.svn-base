@@ -1,0 +1,28 @@
+package com.test.fuelDemo;
+
+import java.util.List;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	FuelFilter fuelFilter = new FuelFilter();
+    	ReadExcel readExcel = new ReadExcel();
+    	List<FuelData> fuelDataList = readExcel.getExcelInfo("d://A7E086.xlsx");
+    	for(int i=0;i<fuelDataList.size();i++){
+    		fuelFilter.doFilter(fuelDataList.get(i), new FuelFilterCallback() {
+				
+				public void doCallBack(FuelData fuelData) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+    	}
+//    	CreateExcel createExcel = new CreateExcel();
+//    	createExcel.createExcel(fuelFilter.getSaveFuelDataList());
+    }
+}

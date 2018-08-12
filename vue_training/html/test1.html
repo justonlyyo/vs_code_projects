@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../js/vue_dev.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="example1">
+        <div>{{ value }}</div>
+        <div>{{ result }}</div>
+    </div>
+</body>
+<script>
+    let example1 = new Vue({
+        "el": "#example1",
+        "data": {
+            value: 12
+        },
+        computed:{
+            result: function(){
+                return this.value * 2;
+            }
+        }
+    });
+</script>
+</html>
