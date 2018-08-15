@@ -1,0 +1,45 @@
+html
+    font-size 14px
+
+.main_zone
+    width 100%
+    min-height 300px
+    background-color: #f8f8f8
+    .letter_set
+        margin 10px
+        border 1px solid lightgrey
+        width 100%
+        height 100%
+        font-size 36px
+        padding 10px
+        display flex
+        flex-direction row
+        justify-content: flex-start
+        .not_set
+            width calc(100% - 6em)
+            display flex
+            flex-direction row
+            flex-wrap wrap  /*换行方式*/
+            justify-content flex-row  /*主轴对齐方式*/
+            aligin-items center  /*交叉轴对齐方式*/
+            algin-content flex-start  /*多轴线对齐方式*/
+            .cell
+                width 3em
+                height 3em
+                border 1px solid #f8f8f8
+                text-align: center
+                line-height 3em
+            .cell:hover
+                border 1px solid lightgrey
+        .terminal_set
+            width 6em
+            height 100%
+                .cell
+                width 3em
+                height 3em
+                border 1px solid #f8f8f8
+                text-align: center
+                line-height 3em
+                .cell:hover
+                    border 1px solid lightgrey
+                    
