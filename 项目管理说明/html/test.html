@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    #level_3 {
+        width: 150px;
+        height: 280px;
+        padding: 10px;
+        background-color: aqua;
+    }
+    
+    #level_2 {
+        width: 250px;
+        height: 780px;
+        padding: 20px;
+        background-color: blueviolet;
+    }
+    
+    #level_1 {
+        width: 350px;
+        height: 980px;
+        padding: 30px;
+        background-color: chocolate;
+    }
+    
+    #drag {
+        width: 50px;
+        height: 50px;
+        background-color: blanchedalmond;
+    }
+</style>
+
+<body>
+    <div class="layout" id="level_1">
+        <div class="layout" id="level_2">
+            <div class="layout" id="level_3">
+                <button id="btn_1 ">点击</button>
+                <div id="drag">拖动</div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function() {
+        $(".layout").on("click", function() {
+            console.log($(this).attr("id") + " is clicked! ");
+        });
+        $("#btn_1").click(function() {
+            console.log($(this).attr("id") + " begin clicked! ");
+        });
+        $(".layout,#drag").on("touchstart", function() {
+            console.log($(this).attr("id") + "touch start");
+        }).on("touchmove", function() {
+            console.log($(this).attr("id") + "touch move");
+        }).on("touchend", function() {
+            console.log($(this).attr("id") + "touch end");
+        });
+        $("#level_2").on("click touchmove", function(event) {
+            console.log("----------------")
+                // event.preventDefault();
+                // event.stopPropagation();
+                // console.log(event);
+            return false;
+        });
+
+
+        // end !    
+    });
+</script>
+
+</html>
