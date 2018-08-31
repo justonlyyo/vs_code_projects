@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/d3.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    .key--white {
+        fill: #fff;
+        stroke: #777;
+    }
+    
+    .key--black {
+        fill: #333;
+        stroke: #000;
+    }
+    
+    .key--white:hover {
+        fill: cyan;
+        stroke: #00999b;
+    }
+    
+    .key--black:hover {
+        fill: magenta;
+        stroke: #910099;
+    }
+</style>
+
+<body>
+
+</body>
+<script>
+    // API中文地址https://github.com/xswei/d3js_doc/blob/master/API_Reference/API.md
+    var width = 600;
+    var height = 600;
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+    var outer_radius = (height / 2 - 30);
+    var inner_radius = outer_radius - 120;
+    var g = svg.append("g").attr("transform", `translate(${width/2}, ${height/2})`);
+    var over = "ontouchstart" in window ? "touchstart" : "mouseover",
+        out = "ontouchend" in window ? "touchend" : "mouseout";
+    var pie = d3.pie()
+        .startAngle(-Math.PI)
+        .endAngle(Math.PI)
+        .value(function() {
+            return 1;
+        })
+        .sort(null);
+    var arc = d3.arc()
+        .cornerRadius(4)
+        .padRadius(outer_radius)
+        .innerRadius(function(d) {
+            return d.sharp ? inner_radius + (outer_radius - inner_radius) * 0.3 : inner_radius;
+        });
+
+    var key = g.selectAll("path")
+        .data(sharpen(pie(repeat(["C", "D", "E", "F", "G", "A", "B"], 6 * 4))))
+        .enter().append("path")
+        .each(function(d, i) {
+            d.outerRadius = outer_radius - 10;
+        })
+        .attr("class", function(d) {
+            return "key key--" + (d.sharp ? "black" : "white");
+        })
+        .attr("d", arc)
+        .on(over, arcTween(outer_radius, 0))
+        .on(out, arcTween(outer_radius - 10, 150));
+
+    function arcTween(outer_radius, delay) {
+        return function() {
+            d3.event.preventDefault();
+            d3.select(this).transition().delay(delay).attrTween("d", function(d) {
+                var i = d3.interpolate(d.outerRadius, outer_radius);
+                return function(t) {
+                    d.outerRadius = i(t);
+                    return arc(d);
+                };
+            });
+        };
+    }
+
+    function repeat(notes, n) {
+        return d3.merge(d3.range(n).map(function() {
+            return notes;
+        }));
+    }
+
+    function sharpen(keys) {
+        var keyWidth = Math.PI * 2 / keys.length;
+
+        for (var i = 0, n = keys.length - 1, k; i < n; ++i) {
+            if (/[CDFGA]/.test((k = keys[i]).data)) {
+                keys.splice(++i, 0, {
+                    startAngle: k.startAngle + keyWidth * 0.65,
+                    endAngle: k.endAngle + keyWidth * 0.35,
+                    sharp: true
+                });
+                ++n;
+            }
+        }
+
+        for (var i = 0, n = keys.length; i < n; ++i) {
+            keys[i].sharp = !!keys[i].sharp;
+            keys[i].frequency = 440 * Math.pow(2, (i % 72 - 9) / 12 - 2); // 0 is middle C
+        }
+
+        return keys.sort(function(a, b) {
+            return a.sharp - b.sharp;
+        });
+    }
+
+    (function() {
+        var AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext;
+        if (!AudioContext) return console.error("AudioContext not supported");
+        if (!OscillatorNode.prototype.start) OscillatorNode.prototype.start = OscillatorNode.prototype.noteOn;
+        if (!OscillatorNode.prototype.stop) OscillatorNode.prototype.stop = OscillatorNode.prototype.noteOff;
+
+        var context = new AudioContext;
+
+        key.on(over + ".beep", function(d, i) {
+            var now = context.currentTime,
+                oscillator = context.createOscillator(),
+                gain = context.createGain();
+            oscillator.type = "square";
+            oscillator.frequency.value = d.frequency;
+            gain.gain.linearRampToValueAtTime(0.0, now + 0.0);
+            gain.gain.linearRampToValueAtTime(0.6, now + 0.1);
+            gain.gain.linearRampToValueAtTime(0.0, now + 1.0);
+            oscillator.connect(gain);
+            gain.connect(context.destination);
+            oscillator.start(0);
+            setTimeout(function() {
+                oscillator.stop();
+            }, 1500);
+        });
+    })();
+</script>
+
+</html>

@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/d3.min.js"></script>
     <title>Document</title>
 </head>
-<body>
+<style>
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: black;
+        shape-rendering: crispEdges;
+    }
     
+    .axis text {
+        font-family: sans-serif;
+        font-size: 11px;
+    }
+</style>
+
+<body>
+
 </body>
+<script>
+    // API中文地址https://github.com/xswei/d3js_doc/blob/master/API_Reference/API.md
+    var width = 300;
+    var height = 300;
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+
+    var react_height = 25;
+    var data = [250, 210, 170, 130, 90];
+    var min = d3.min(data);
+    var max = d3.max(data);
+    // d3.scaleLinear() 是新函数,替代教程上的d3.scle.linear(),这是定义一个比例尺
+    var linear = d3.scaleLinear().domain([min, max]).range([90, 300]);
+    // 定义一个坐标
+    var axis = d3.axisBottom(linear);
+    svg.
+    append("g").attr("style", "color:red").call(axis).selectAll("rect").data(data).enter().append("rect").attr("x", 20)
+        .attr("y", function(d, i) {
+            return i * react_height;
+        }).attr("width",
+            function(d, i) {
+                var w = linear(d);
+                console.log(d, w);
+                return w;
+
+            }).attr("height", react_height - 2).attr("fill", "red");
+</script>
+
 </html>

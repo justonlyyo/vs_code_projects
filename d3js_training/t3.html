@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/d3.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    .key--white {
+        fill: #fff;
+        stroke: #777;
+    }
+    
+    .key--black {
+        fill: #333;
+        stroke: #000;
+    }
+    
+    .key--white:hover {
+        fill: cyan;
+        stroke: #00999b;
+    }
+    
+    .key--black:hover {
+        fill: magenta;
+        stroke: #910099;
+    }
+</style>
+
+<body>
+
+</body>
+<script>
+    // API中文地址https://github.com/xswei/d3js_doc/blob/master/API_Reference/API.md
+    // 指南 https://github.com/d3/d3/wiki/Tutorials
+    // 模拟时钟制作1 https://www.ericbullington.com/blog/2012/10/27/d3-oclock/
+
+    var fields = function() {
+        var current_time, hour, minute, second;
+        current_time = new Date();
+        second = current_time.getSeconds();
+        minute = current_time.getMinutes();
+        hour = current_time.getHours() + minute / 60;
+        var data = [{
+            "unit": "seconds",
+            "numeric": second
+        }, {
+            "unit": "minutes",
+            "numeric": minute
+        }, {
+            "unit": "hours",
+            "numeric": hour
+        }];
+        return data;
+    };
+
+    var width, height, offSetX, offSetY, pi, scaleSecs, scaleHours;
+    width = 400;
+    height = 200;
+    offSetX = 150;
+    offSetY = 100;
+
+    pi = Math.PI;
+    scaleSecs = d3.scaleLinear().domain([0, 59 + 999 / 1000]).range([0, 2 * pi]);
+    scaleMins = d3.scaleLinear().domain([0, 59 + 59 / 60]).range([0, 2 * pi]);
+    scaleHours = d3.scaleLinear().domain([0, 11 + 59 / 60]).range([0, 2 * pi]);
+
+    var vis, clockGroup;
+    vis = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    clockGroup = vis.append("svg:g")
+        .attr("transform", "translate(" + offSetX + "," + offSetY + ")");
+
+    clockGroup.append("svg:circle")
+        .attr("r", 80).attr("fill", "none")
+        .attr("class", "clock outercircle")
+        .attr("stroke", "black")
+        .attr("stroke-width", 2);
+
+    clockGroup.append("svg:circle")
+        .attr("r", 4)
+        .attr("fill", "black")
+        .attr("class", "clock innercircle");
+</script>
+
+</html>
