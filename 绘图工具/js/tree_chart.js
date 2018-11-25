@@ -1,6 +1,6 @@
 var myChart = echarts.init(document.getElementById("show"));
 
-var data = {
+var 人力资源管理系统 = {
     "name": "人力资源管理系统",
     "children": [
         {
@@ -90,6 +90,38 @@ var data = {
     ]
 };
 
+var 消防题库 = {
+    "name": "消防题库",
+    "children": [
+        {"name": "用户模块", "children": [
+            {"name": "用户注册, 登录, 注销.信息修改, 手机绑定等"},
+            {"name": "查看会员信息,充值"}
+        ]},
+        {"name": "系统模块/后台管理", "children": [
+            {"name": "用户等级设定"},
+            {"name": "等级权限设定"},
+            {"name": "用户信息修改"},
+            {"name": "查询用户信息"},
+            {"name": "用户信息统计(人数,缴费情况等,以柱状图,线图,饼图提供直观分析帮助)"}
+        ]},
+        {"name": "教学模块", "children": [
+            {"name": "技术实务"},
+            {"name": "综合能力"},
+            {"name": "国标规范"},
+            {"name": "常用数据"},
+            {"name": "错题库"},
+            {"name": "综合训练"},
+            {"name": "VIP中心"}
+        ]},
+        {
+            "name": "下载中心", "children":[
+                {"name": "一般资源"},
+                {"name": "VIP资源"}
+            ]
+        }
+    ]
+};
+
 myChart.setOption(option = {
     tooltip: {
         trigger: 'item',
@@ -99,7 +131,7 @@ myChart.setOption(option = {
         {
             type: 'tree',
 
-            data: [data],
+            data: [消防题库],
 
             top: '1%',
             left: '7%',
