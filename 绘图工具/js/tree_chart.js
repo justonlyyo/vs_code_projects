@@ -1,6 +1,6 @@
 var myChart = echarts.init(document.getElementById("show"));
 
-var data = {
+var example = {
     "name": "医疗器材经营系统",
     "children": [
         {
@@ -47,6 +47,67 @@ var data = {
                 { "name": "数据备份和回复" }
             ]
         }
+    ]
+};
+
+var data = {
+    "name": "信息管理平台",
+    "children": [
+        {
+            "name": "数据模块",
+            "children": [
+                { "name": "数据采集" },
+                { "name": "数据清洗" },
+                { "name": "数据归一化"},
+                { "name": "数据分析"},
+                { "name": "趋势预测"}
+            ]
+        },
+        {
+            "name": "专家模块",
+            "children": [
+
+                { "name": "专家信息管理" },
+                { "name": "薪酬管理" },
+                { "name": "......." },
+            ]
+        },
+        {
+            "name": "项目管理",
+            "children": [
+                { "name": "科技基本信息维护" },
+                { "name": "客户价值分析" },
+                { "name": "客户分先评估" }
+            ]
+        },
+        {
+            "name": "财务管理",
+            "children": [
+                { "name": "账户管理" },
+                { "name": "权限分配" },
+                { "name": "系统调整" },
+                { "name": "数据备份和回复" }
+            ]
+        },
+        {
+            "name": "账户管理",
+            "children": [
+                { "name": "账户管理" },
+                { "name": "权限分配" },
+                { "name": "系统调整" },
+                { "name": "数据备份和回复" }
+            ]
+        },
+        {
+            "name": "系统管理",
+            "children": [
+                { "name": "各类统计信息" },
+                { "name": "分公司" },
+                { "name": "合作伙伴" },
+                { "name": "厂家和客户" }
+            ]
+        },
+        
     ]
 };
 
