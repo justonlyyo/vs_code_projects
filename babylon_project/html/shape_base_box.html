@@ -4,19 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css//index.css">
-    <script src="js/babylon.custom.js"></script>
-    <script src="js/babylonjs.loaders.min.js"></script>
-    <script src="js/pep.js"></script>
-    <title>Document</title>
+    <script src="../js/babylon.custom.js"></script>
+    <script src="../js/babylonjs.loaders.min.js"></script>
+    <script src="../js/pep.js"></script>
+    <title>形状(初级)</title>
 </head>
 <style>
+html{
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+}    
 body{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: flex-star;
     justify-content: center;
     align-items: center;
-}    
+}     
 #show1{
     width: 400px;
     height: 300px;
@@ -56,14 +64,24 @@ body{
          * api: https://doc.babylonjs.com/api/classes/babylon.hemisphericlight#constructor
         */
         var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
-        var light2 = new BABYLON.PointLight("light3", new BABYLON.Vector3(0, 1, -1), scene);
-        /* 创建一个球形的控制网格. options参数,请看api
-         * 第一个参数 name: 字符串, 名字
-         * 第二个参数 options: object, 参数对象.
-         * 第三个参数 scene: 场景
-         * api: https://doc.babylonjs.com/api/classes/babylon.meshbuilder#createsphere
+        var light2 = new BABYLON.PointLight("light3", new BABYLON.Vector3(-1, -1, 1), scene);
+        /* 
+         *创建一个盒子
         */
-        var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2}, scene);
+        var c1 = new BABYLON.Color4(255, 0, 0, 0.5);  // 红
+        var c2 = new BABYLON.Color4(255,255,0, 1);  // 黄
+        var c3 = new BABYLON.Color4(0, 0, 255, 1);  // 蓝
+        var c4 = new BABYLON.Color4(0, 255, 0, 1);  // 绿
+        var c5 = new BABYLON.Color4(0, 255, 255, 1);  // 青
+        var c6 = new BABYLON.Color4(255, 0, 255, 1);  // 洋红
+        var v1 = new BABYLON.Vector4(1, 1, 1, 1);
+        var opts = {
+            height: 3, width: 2, depth: 1,
+            faceColors: [c1, c2, c3, c4, c5, c6],
+            faceUV:[v1, v1, v1, v1, v1, v1],
+            sideOrientation: BABYLON.Mesh.BACKSIDE
+            };
+        var box = BABYLON.MeshBuilder.CreateBox("myBox", opts, scene);
         return scene;
     };
     
