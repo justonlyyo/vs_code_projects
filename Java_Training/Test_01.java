@@ -1,28 +1,33 @@
-
-
-public class Test_01{
-    public static void main(String[] args){
+public class Test_01 {
+    public static void main(String[] args) {
         System.out.println("Hello world!");
         Person p = new Person("张三");
         p.sayHello();
-        for(int i = 0; i < 10; i++){          
-            switch(i % 2){
-                case 0:
+        for (int i = 0; i < 10; i++) {
+            switch (i % 2) {
+            case 0:
                 System.out.println(String.format("%d偶数", i));
                 break;
-                default:
+            default:
                 System.out.println(String.format("%d奇数", i));
             }
+        }
+        String[] list = new String[10];
+        System.out.println(list.length);
+        for(String item: list){
+            System.out.println(item);
         }
     }
 }
 
-class Person{
+class Person {
     String name;
-    public Person(String name){
+
+    public Person(String name) {
         this.name = name;
     }
-    public void sayHello(){
+
+    public void sayHello() {
         String str = "my name is " + this.name;
         System.out.println(str);
     }
