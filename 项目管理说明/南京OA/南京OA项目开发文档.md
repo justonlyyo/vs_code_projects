@@ -36,10 +36,10 @@
 
 * /project/cost/view   查看造价项目的信息(可能需要参数)
 * /project/cost/update   修改造价项目的信息(可能需要参数)
-* /project/cost/delete   查看造价项目的信息(可能需要参数)
+* /project/cost/delete   删除造价项目的信息(可能需要参数)
 * /project/agent/view   查看代理项目的信息(可能需要参数)
 * /project/agent/update   修改代理项目的信息(可能需要参数)
-* /project/agent/delete   查看代理项目的信息(可能需要参数)
+* /project/agent/delete   删除代理项目的信息(可能需要参数)
 * ....
 * /project/paging_view   分页查看所有项目的信息(可能需要参数)
 
@@ -58,7 +58,10 @@
 4. 如果用户提交的身份和密码,则生成一条用户登录记录.用户登录记录至少包含以下字段:
 
     ```java
-    public class
+    public class LoginRecord{
+        String uuid;  // 序列号,唯一,也可以是int类型.只要能保证唯一即可
+        String token;  // 登录id
+    }
     ```
 
 ## 模块划分
