@@ -59,16 +59,70 @@
 
     ```java
     public class LoginRecord{
-        String uuid;  // 序列号,唯一,也可以是int类型.只要能保证唯一即可
-        String token;  // 登录id
+        String token;  // 登录id.只要能保证唯一即可.其加密后的字符串作为载荷的一部分放入客户端请求头(x-auth)中.
+        String userId;  // 外键, 用户id,类型同用户表的id, 
+        Int expire;  // 到期时间,单位秒.默认应该是7200
+        Date loginTime;  // 登录时间
     }
     ```
+   添加登录记录用,将记录中的token使用jwt打包后(打包方法详见下面的使用**jwt加密登录信息)返回给客户端 {"message": "success", "x-auth": x-auth}
+
 
 ## 模块划分
 
-### 系统模块
+* 日常工作
 
+  * 公告系统.接受系统消息.包括: 公告, 会议.
+  * 知识库 任何人都可提交. 需要审核. 关键字:标题, 说明, 分类,标签, 文档(图片/文件)
+  * 代办事宜.包括: 工作计划, 会议提醒,领导分配的这几大类型.代办事宜有提醒功能(发送到app).代办事宜有上下级权限关系.
 
+* 个人中心
 
+  * 个人资料修改,查看.
+  * 我的业绩 以表格形式展示年度业绩,可以翻译
 
-### 日常工作
+* 行政管理
+
+  * 物品领用  申请软件狗, 烟酒, 办公用品. 物品后台可添加.包括名称. 规格,说明. 申请需要审批.
+  * 行政合同(非项目合同)  添加/修改/删除/查询/过滤
+  * 人力资源管理
+
+* 财务管理
+* 造价咨询
+* 招标代理
+* 数据中心
+* 系统管理
+
+### 系统管理
+
+* 添加权限组
+* 修改权限组
+* 删除权限组
+* 添加用户
+* 修改用户
+* 删除用户
+* 查询用户的权限信息
+
+#### 接口1
+
+接口功能说明
+
+* url:
+* methods:
+* request args:
+* requests example
+* return type:
+* return args:
+* return example
+
+#### 接口2
+
+接口功能说明
+
+* url:
+* methods:
+* request args:
+* requests example
+* return type:
+* return args:
+* return example
