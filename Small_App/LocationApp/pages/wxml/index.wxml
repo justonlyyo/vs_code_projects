@@ -1,0 +1,20 @@
+<!--pages/wxml/index.wxml-->
+<text>当前时间:{{time}}</text>
+<view wx:if="{{length > 5}}">大于5</view>
+<view wx:elif="{{length > 15}}">大于10</view>
+<view wx:else="{{length <= 5}}">小于等于5</view>
+<view wx:for="{{users}}">
+{{index}}: {{item}}
+</view>
+<view wx:for-item="item2" wx:for="{{users2}}">
+{{item.name}}是一个{{item.job}}
+</view>
+<template name="temp1">
+  <view>
+    <text> {{index}}: {{msg}} </text>
+    <text> Time: {{time}} </text>
+  </view>
+</template>
+
+<template is="temp1" data="{{d1}}">
+</template>
