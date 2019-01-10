@@ -5,18 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    time: (new Date()).toString(),
-    length: 7,
-    "users": ["tom", "jerry", "jack"],
-    "users2": [
-      {"name": "张三", "job": "worker"},
-      {"name": "李四", "job": "teacher"}
-    ],
-    d1:{
-      "index": 12,
-      "msg": "hello",
-      "time": "15:42"
-    }
+    time: (new Date()).toLocaleDateString()
   },
 
   /**
@@ -32,7 +21,12 @@ Page({
   onReady: function () {
 
   },
-
+  statechange(e) {
+    console.log('live-pusher code:', e.detail.code)
+  },
+  error(e) {
+    console.error('live-player error:', e.detail.errMsg)
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -75,3 +69,13 @@ Page({
 
   }
 })
+
+// var pusher = wx.createLivePusherContext();
+// var push_success = function(){console.log("success");};
+// var push_fail = function(){console.log("fail");};
+// var push_complete = function(){console.log("complete");};
+// pusher.start({
+//   "success": push_success,
+//   "fail": push_fail,
+//   "complete": push_complete
+// });
