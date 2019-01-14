@@ -71,22 +71,43 @@
 
 * 日常工作
 
-  * 公告系统.接受系统消息.包括: 公告, 会议.
+  * **公告系统**.接受系统消息.包括: 公告, 会议.
   * 知识库 任何人都可提交. 需要审核. 关键字:标题, 说明, 分类,标签, 文档(图片/文件)
-  * 代办事宜.包括: 工作计划, 会议提醒,领导分配的这几大类型.代办事宜有提醒功能(发送到app).代办事宜有上下级权限关系.
+  * **待办事宜**.包括: 工作计划, 会议提醒,领导分配的这几大类型.代办事宜有提醒功能(发送到app).代办事宜有上下级权限关系.
 
 * 个人中心
 
-  * 个人资料修改,查看.
-  * 我的业绩 以表格形式展示年度业绩,可以翻译
+  * **个人资料**修改,查看.
+  * **我的业绩** 以表格形式展示年度业绩,可以翻译
 
 * 行政管理
 
-  * 物品领用  申请软件狗, 烟酒, 办公用品. 物品后台可添加.包括名称. 规格,说明. 申请需要审批.
-  * 行政合同(非项目合同)  添加/修改/删除/查询/过滤
-  * 人力资源管理  人事档案的添加, 修改,删除,晋升.需要有晋升提醒.
+  * **物品领用**  申请软件狗, 烟酒, 办公用品. 物品后台可添加.包括名称. 规格,说明. 申请需要审批.
+  * **行政合同**(非项目合同)  添加/修改/删除/查询/过滤
+  * **人力资源管理**  人事档案的添加, 修改,删除,晋升.需要有晋升提醒.
+  * **制度管理** 公司制度的添加, 删除,修改, 发布. 制度的有审核流程.审核后才可以发布.
+  * **固定资产管理** 固定资产的档案管理. 固定资产的档案包括: 固定资产编号, 固定资产的基本信息, 使用部门/人, 保管人,责任人, 已使用时间, 使用年限, 折旧情况等.管理人员可以分类的查看固定资产的档案.进行相应的操作.
+  * **原件,印章管理** 企业在业务运作的过程中,经常会发生.需要借阅/借用原件或者印章的情况.而原件/印章往往都是独此一件.在频繁的借用和流转的过程中.如果进行跟踪和管理是本部分的核心任务.用户可以在页面/App上提出对原件/印章的借用申请.在操作的时候,用户可以查看到物品是否已被借出,对于未被借出的物品.用户在填写借用目的, 预计借出日期和预计归还日期后即可提交借出申请了;对于已被借出的物品,系统则会显示最早的预计归还时间.以便用户评估是排队申请还是选择其他办法.管理员人可以查看,评估借用申请.决定是同意借出或是拒绝借出.根据公司实际的业务情况.管理人员也可以调整物品借用的优先级以满足业务需要.物品必须归还后方可继续借出.不得在借用人之间流转.
 
 * 财务管理
+
+  * **项目结算**, 又分为对外结算,对内结算.在设计的时候采用2个页面也可以.
+
+    > * 查询项目 查询条件,过滤条件,
+    > * 分单项目结算表和多项汇总表(针对某公司)针对单个项目, 针对公司, 汇总改公司名下得全部项目得结算信息.
+    > * 项目收费标准会在项目登记步骤中注明,
+    > * 收费标准也可以后来补上.
+    > * 收费标准可以手动填写和依赖公式生成.
+    > * 项目结算必须有已收回款项的数额.
+
+  * **公司财务**, 又分为财务流水账和开票.在设计的时候采用2个页面也可以.
+
+    > * 财务流水账 需要参考一下其他财务流水系统的模式.相对来说这一部分比较简单.仅仅实现一个记账和汇总统计功能.目前具体设计未明确,可以稍后开发.
+    > * 开票流程 开票就是开(发)票的一个过程. 过程一般如下: $$\text{开票申请}\rightarrow\text{审核}\rightarrow\text{开票}$$ 
+    > * 开票申请 开票申请需要填写申请资料. 申请资料包含: 申请人id,申请人名字, 部门. 关联的项目id, 关联的项目名字, 关联的项目总额和已经开出的发票的数额.本次申请的开票额度. 备注信息(开票事由),申请时间等.
+    > * 开票审核 开票审核的权限后台可以设置.
+
+
 * 造价咨询
 * 招标代理
 * 数据中心
@@ -102,6 +123,8 @@
 ### 司少杰负责部分
 
 #### 系统管理
+
+> 开发周期 2019-1-8--2018-1-11
 
 用户管理,权限管理,部门管理,职务管理.需要实现的功能如下(暂定):
 
@@ -125,6 +148,7 @@
 
 > 接口和功能并非是一对一的关系,可以自由安排和组合. 接口文档请自行完善,格式如下
 
+```markdown
 ##### 接口名称
 
 接口功能说明(文本描述)
@@ -136,6 +160,152 @@
 * return type:
 * return args:
 * return example
+```
+
+##### 权限部分
+
+###### 查看权限
+
+* url: http://127.0.0.1:8080/role/role
+* 请求方式: get
+* 请求参数: roleName(String,可以为空)
+* 返回类型: json
+* 返回参数:tbrole(json(roleId(int),roleName(String))),code(int),message(String)
+
+###### 添加权限
+
+* url: http://127.0.0.1:8080/roel/addrole
+* 请求方式: GET
+* 请求参数: roleId(int[] a),userId(int)
+* 请求例子:http://127.0.0.1:8080/role/addrole?userId=2&roleId=1,2,3,4
+* 返回类型: json
+* 返回参数: code(int),message(String)
+
+###### 修改权限信息
+
+* url: http://127.0.0.1:8080/role/uprole
+* 请求方式: GET
+* 请求参数: dpName(String),dpId(int),state(int)
+* 请求例子: http://127.0.0.1:8080/role/uprole?userId=2&roleId=1,2,3,4&state=0
+* 返回类型: json
+* 返回参数: code(int),message(String)
+
+###### 删除权限
+
+* url: http://127.0.0.1:8080/role/delrole
+* 请求方式: GET
+* 请求参数: userId(int),roleId(int[] a)
+* 请求例子: http://127.0.0.1:8080/role/delrole?userId=2&roleId=2,3,4
+* 返回参数: code(int),message(String)
+
+##### 工作岗位信息
+
+###### 查看岗位信息
+
+* url: http://127.0.0.1:8080/oa/job/jobs
+* 请求方式: get
+* 请求参数: jobName(String,可以为空)
+* 返回类型: json
+* 返回参数:tdJob(json(jobId(int),jobName(String))),code(int),message(String)
+
+ 
+###### 添加岗位信息
+
+* url: http://127.0.0.1:8080/oa/job/addjob
+* 请求方式: GET
+* 请求参数: jobName(String),userId(int)
+* 请求例子:http://127.0.0.1:8080/oa/job/addjob?jobName=修仙经理&userId=1
+* 返回类型: json
+* 返回参数: code(int),message(String)
+
+###### 修改岗位信息
+
+* url: http://127.0.0.1:8080/oa/job/upjob
+* 请求方式: GET
+* 请求参数: jobName(String),jobId(int),uId(int)
+* 请求例子: http://127.0.0.1:8080/oa/job/upjob?jobName=修仙经理&jobId=6&uId=1
+* 返回类型: json
+* 返回参数: code(int),message(String)
+
+###### 删除岗位
+
+* url: http://127.0.0.1:8080/oa/job/deljob
+* 请求方式: GET
+* 请求参数: jobId(int),uId(int)
+* 请求例子: http://127.0.0.1:8080/oa/job/deljob?jobId=6&uId=1
+* 返回参数: code(int),message(String)
+
+##### 部门信息
+
+###### 查看部门
+
+* url: http://127.0.0.1:8080/oa/dp/dept
+* 请求方式: get
+* 请求参数: dpName(String,可以为空)
+* 返回类型: json
+* 返回参数:tdDept(json(dpId(int),dpName(String))),code(int),message(String)
+
+###### 添加部门信息
+
+* url: http://127.0.0.1:8080/oa/dp/addDept?dpName=修仙&userId=1
+* 请求方式: GET
+* 请求参数: dpName(String),userId(int)
+* 请求例子:http://127.0.0.1:8080/oa/dp/addDept?dpName=修仙&userId=1
+* 返回类型: json
+* 返回参数: code(int),message(String)
+
+###### 修改部门信息
+
+* url: http://127.0.0.1:8080/oa/dp/upDept
+* 请求方式: GET
+* 请求参数: dpName(String),dpId(int),uId(int)
+* 请求例子: http://127.0.0.1:8080/oa/dp/upDept?dpName=修仙aaa&uId=1&dpId=10
+* 返回类型: json
+* 返回参数: code(int),message(String)
+
+###### 删除部门
+
+* url: http://127.0.0.1:8080/dp/delDept
+* 请求方式: GET
+* 请求参数: dpId(int),uId(int)
+* 请求例子: http://127.0.0.1:8080/oa/dp/delDept?uId=1&dpId=10
+* 返回参数: code(int),message(String)
+
+##### 用户中心
+
+###### 查看用户信息
+
+* url: http://127.0.0.1:8080/oa/users/user
+* 请求方式: get
+* 请求参数: dpName(String,可以为空),jobName(String,可以为空)
+* 请求例子:http://127.0.0.1:8080/users/user  或者  http://127.0.0.1:8080/users/user?dpName=策划&jobName=策划(模糊查询专用)
+* 返回类型: json
+* 返回参数: tbUsers(json(userName(String),loginName(String),pwd(String),userSex(String),userPhone(int),userEmail(String,可以为空),dpId(int),jobId(int),dpName(String),jobName(String))code(int),message(String)
+
+###### 添加用户信息
+
+* url: http://127.0.0.1:8080/users/adduser
+* 请求方式: GET
+* 请求参数: userName(String),loginName(String),pwd(String),userSex(String),userPhone(int),userEmail(String,可以为空),dpId(int),jobId(int),userId(int)
+* 请求例子: http://127.0.0.1:8080/oa/users/adduser?userName=李小璐&loginName=lilu&pwd=123&userSex=女&userPhone=1233213213&userEmail=12222@123.com&dpId=2&jobId=2&userId=1
+* 返回参数: code(int),message(String)
+
+###### 修改用户信息
+
+* url: http://127.0.0.1:8080/users/upuser
+* 请求方式: GET
+* 请求参数: userName(String),pwd(String),userSex(String),userPhone(int),userEmail(String,可以为空),dpId(int),jobId(int),userId(int),uId(int)
+* 请求例子: http://127.0.0.1:8080/oa/users/upuser?userName=李小璐1111&loginName=lilu&pwd=123&userSex=女&userPhone=1233213213&userEmail=12222@123.com&dpId=2&jobId=2&userId=1&uId=1
+* 返回类型: json
+* 返回参数: code(int),message(String)
+
+###### 删除用户
+
+* url: http://127.0.0.1:8080/oa/users/deluser
+* 请求方式: GET
+* 请求参数: userId(int),uId(int)
+* 请求例子: http://127.0.0.1:8080/oa/users/deluser?uId=1&userId=15
+* 返回参数: code(int),message(String)
 
 ### 全天龙负责部分
 
@@ -149,6 +319,7 @@
 * 物品领用申请
 * (领用)申请审核
 * 行政合同添加/删除/修改/分页查询(显示)
+* 公司制度得添加/删除/修改/分页查询(显示)和审核流程
 * 人事档案的添加, 修改,删除/分页查询(显示)
 * 人事有晋升制度.(一定工作年限达到后会升级).需要有晋升提醒.
 
@@ -200,16 +371,236 @@
 
 人事上的谨慎指的是员工在某一个职称/级别的岗位上,工作年限达到一定级别后,就享有晋升到下一级别的权力.由于是否可以晋升是计算出来的,所以不适合保存在数据库中.而是每次查询信息的时候计算出来的.另外,需要以是否可以晋升或者可晋升到某个职称/级别为条件进行查询.
 
-> 接口和功能并非是一对一的关系,可以自由安排和组合. 接口文档请自行完善,格式如下
+> 接口和功能并非是一对一的关系,可以自由安排和组合. 接口文档请自行完善,
 
-##### 接口名称
+##### 物品申请
 
-接口功能说明(文本描述)
+###### 分页查询货物
 
-* url:
-* methods:
-* request args:
-* requests example
-* return type:
-* return args:
-* return example
+* url: http://127.0.0.1:8080/oa/administrative/goods/view/goods_all
+* 请求方式: GET
+* 请求参数: pageNum(int,可以为空)，pageSize(int,可以为空)
+* 请求例子：http://127.0.0.1:8080/oa/administrative/goods/view/goods_all?pageSize=1&pageNum=2
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string),data(object)
+* 返回例子：
+
+    ```javascript
+    {
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list":
+            [
+                {
+                    "id": "用户id（int）",
+                    "name": "物品名（string）",
+                    "goodstypeId": "分类id（int）",
+                    "description": "说明（string）",
+                    "number": 数量（int）,
+                    "state": "转态（stirng）"
+                }
+            ]
+        }
+    }
+    ```
+
+###### 修改物品
+
+* url: http://127.0.0.1:8080/oa/administrative/goods/edit/find_id
+* 请求方式: POST
+* 请求参数:
+
+    ```javascript
+    {
+        "id":"货物id（int）",
+        "name":"货物名称（string）",
+        "goodstypeId":"物品分类id（int）",
+        "description":"说明（string）",
+        "number":"数量（int）",
+        "state":"状态（string）"
+    }
+    ```
+
+* 参数格式：json
+* 请求例子：http://127.0.0.1:8080/oa/administrative/goods/edit/find_id
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string,返回信息)
+
+###### 添加物品
+
+* url: http://127.0.0.1:8080/oa/administrative/goods/add/addGoods
+* 请求方式: POST
+* 请求参数: {
+	"id":"货物id（int）",
+	"name":"货物名称（string）",
+	"goodstypeId":"物品分类id（int）",
+	"description":"说明（string）",
+	"number":"数量（int）",
+	"state":"状态（string）"
+	}
+* 请求例子：http://127.0.0.1:8080/oa/administrative/goods/add/addGoods
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string,返回信息)
+
+
+##### 申请物品
+* url: http://127.0.0.1:8080/oa/administrative/goods/add/addAfGoods
+* 请求方式: POST
+* 请求参数: {
+	"userId":"申请人ID（int）",
+	"goodsId":"申请的物品ID（int）"
+	}
+* 请求例子：http://127.0.0.1:8080/oa/administrative/goods/add/addAfGoods
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string,返回信息)
+
+
+##### 删除物品
+* url: http://127.0.0.1:8080/oa/administrative/goods/remove/find_id_remove/{删除}
+* 请求方式: POST
+* 请求参数:id（int，不能为空）
+* 请求例子：http://127.0.0.1:8080/oa/administrativegoods/remove/find_id_remove/3
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string,返回信息)
+
+
+
+
+###### 分页查询全部合同
+* url: http://127.0.0.1:8080/oa/administrative/contract/view/getContract
+* 请求方式: GET
+* 请求参数: pageNum(int,可以为空)，pageSize(int,可以为空)
+* 请求例子：http://127.0.0.1:8080/oa/administrative/contract/view/getContract?pageSize=1&pageNum=2
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string)
+* 返回例子：``` {
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "id": 合同id（int）,
+                "name": "合同名（string）",
+                "remark": "备注（string）",
+                "date": "时间（date）",
+                "deptId": 部门id（int）,
+                "attachmentUrl": "附件url（string）"
+            }
+        ]
+    }
+} ```
+
+
+##### 删除合同
+* url： http://127.0.0.1:8080/oa/administrative/contract/remove/find_id_remove/{删除id}
+* 请求方式： POST
+* 请求参数： id（int，不能为空）
+* 请求例子：http://127.0.0.1:8080/oa/administrative/contract/remove/find_id_remove/1
+* 返回类型：JSON
+* 返回参数： code(int,状态码),msg(string,返回信息)
+
+
+##### 添加合同
+* url: http://127.0.0.1:8080/oa/administrative/contract/add/addContra
+* 请求方式: POST
+* 请求参数: name(string，合同名称)，remark(string，备注)，date（date，部署时间），deptId（int，部门id）,files（file，附件，多个附件提交多个名为files的附件），
+* 请求例子：http://127.0.0.1:8080/oa/administrative/contract/add/addContra?name=老弟&remark=舒服的&date=2019/1/1&deptId=1
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string,返回信息)
+
+
+##### 修改合同
+* url: http://127.0.0.1:8080/oa/administrative/contract/edit/editContra
+* 请求方式: POST
+* 请求参数: {
+	"id":"1",
+	"name":"合同名(string)",
+	"remark":"备注(string)",
+	"date":"yyyy-MM-dd",
+	"deptId":"部门id（int）"
+	}
+* 参数格式：JSON
+* 请求例子：http://127.0.0.1:8080/oa/administrative/contract/edit/editContra
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string,返回信息)
+
+
+
+### 人事档案模块
+##### 分页查询档案全部信息
+* url: http://127.0.0.1:8080/oa/administrative/archives/view/getarchives
+* 请求方式: GET
+* 请求参数: pageNum(int,可以为空)，pageSize(int,可以为空)
+* 请求例子：http://127.0.0.1:8080/oa/administrative/archives/view/getarchives?pageSize=3&pageNum=1
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string)
+* 返回例子：
+```
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "list": [
+            {
+                "id": 编号（int）,
+                "name": "张三(string)",
+                "headPortrait": "头像url(string)",
+                "sex": 性别（int）,
+                "mobile": "手机号（string）",
+                "email": "邮箱(string)",
+                "diploma": "学历(string)",
+                "diplomaPictureUrl": "学历图片url(string)",
+                "resumeUrl": "简历url(string)",
+                "honorUrl": "荣誉证书url(string)",
+                "createDate": 创建时间（date）,
+                "rzDate": 入职时间（date）,
+            }
+        ]
+    }
+}
+```
+
+
+##### 查询人员入职日期到现在距离多少天
+* url: http://127.0.0.1:8080/oa/administrative/archives/view/getEmployeeRZDate/{id}
+* 请求方式: GET
+* 请求参数: id(int,用户id)
+* 请求例子：http://127.0.0.1:8080/oa/administrative/archives/view/getEmployeeRZDate/1
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string),data(String)
+* 返回例子：``` {"code":200,"msg":"success","data":"返回天数"} ```
+
+
+
+###### 删除人事档案
+* url： http://127.0.0.1:8080/oa/administrative/archives/remove/find_id_remove/{删除id}
+* 请求方式： POST
+* 请求参数： id（int，不能为空）
+* 请求例子：http://127.0.0.1:8080/oa/administrative/archives/remove/find_id_remove/1
+* 返回类型：JSON
+* 返回参数： code(int,状态码),msg(string,返回信息)
+* 返回例子：``` {"code":200,"msg":"success"} ```
+
+
+
+##### 添加人事档案
+* url: http://127.0.0.1:8080/oa/administrative/archives/add/addarchives
+* 请求方式: POST
+* 请求参数: name(string，人名)，sex（int，性别），mobile（string，手机号），email（String，邮箱），diploma（string，最高学历），rzDate（date，入职时间,写法为yyyy/MM/dd），headPortraitFile（file,头像图片），diplomaPictureFiles（file,最高学历证书如果有多个使用相同参数名上传多个图片），resumeFile（file,简历），honorFiles（file,荣誉证书，如果有多个使用相同的文件名上传多个）
+ 
+* 请求例子：http://127.0.0.1:8080/oa/administrative/archives/add/addarchives?name=史蒂夫&sex=1&mobile=15555555555&email=sdfd@qq.com&diploma=本科&rzDate=2017/6/4
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string,返回信息)
+* 返回例子：``` {"code":200,"msg":"success"} ```
+
+
+###### 修改人事档案
+* url: http://127.0.0.1:8080/oa/administrative/archives/edit/editarchives
+* 请求方式: POST
+* 请求参数: name(string,人名)，sex（int,性别），mobile（string,手机号），email（String,邮箱），diploma（string,最高学历），rzDate（date,入职时间,yyyy/MM/dd），headPortraitFile（file,头像图片），diplomaPictureFile（file,最高学历证书图片），oldDiplomaPictureUrl（string，需要修改最高学历图片url地址）resumeFile（file，简历文件），honorFile（file，荣誉证书图片），oldHonorUrl（string，需要的荣誉证书图片地址）
+ 
+* 请求例子：http://127.0.0.1:8080/oa/administrative/archives/edit/editarchives?name=史蒂夫&sex=1&mobile=15555555555&email=sdfd@qq.com&diploma=本科&rzDate=2017/6/4&id=33&oldDiplomaPictureUrl=/files/4ce40d3742c04062b0de85b0e4dfdb79.jpg&oldHonorUrl=/files/8f09bce094c245b89dbf38a665bedfd0.jpg
+* 返回类型:JSON
+* 返回参数:code(int,状态码),msg(string,返回信息)
+* 返回例子：``` {"code":200,"msg":"success"} ```
