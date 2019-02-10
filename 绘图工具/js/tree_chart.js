@@ -54,21 +54,21 @@ var example = {
 };
 
 var data = {
-    "name": "OA系统",
+    "name": "管理员角色",
     "children": [
         {
-            "name": "日常工作",
+            "name": "系统设置",
             "children": [
-                { "name": "用户注册/登录" },
-                { "name": "个人信息修改" },
-                { "name": "个人中心" },
-                { "name": "账户找回"},
-                { "name": "申请商家资格"},
-                { "name": "消息通知"}
+                { "name": "添加/用户" , "children": [{"name": "允许"},{"name":"禁止"}]},
+                { "name": "信息修改",  "children": [{"name": "允许"},{"name":"禁止"}]},
+                { "name": "删除和停用",  "children": [{"name": "允许"},{"name":"禁止"}] },
+                { "name": "分配角色",  "children": [{"name": "允许"},{"name":"禁止"}]},
+                { "name": "角色权限管理",  "children": [{"name": "允许"},{"name":"禁止"}]},
+                { "name": "业务权限管理",  "children": [{"name": "允许"},{"name":"禁止"}]}
             ]
         },
         {
-            "name": "行政管理",
+            "name": "财务管理",
             "children": [
                 { "name": "物品领用" },
                 { "name": "行政合同" },
