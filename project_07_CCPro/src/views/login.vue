@@ -161,7 +161,8 @@
          * @type {default.methods}
          */
         let that = this;
-        let url = 'http://192.168.4.53:1223/user/user_login/';
+        // let url = 'http://192.168.4.53:1223/user/user_login/';
+        let url = 'http://192.168.2.154:7999/user/user_login/';
         let username = this.account.username;
         let pwd = this.account.pwd;
         let result = {
@@ -169,7 +170,7 @@
           username: username,
           nickname: username,
         };
-        console.info(username, pwd);
+        console.info(username, pwd, url);
         this.$axios({
           method: 'post',
           url: url,
@@ -178,6 +179,7 @@
             password: pwd
           }
         }).then(function (data) {
+          console.log(data);
           if (data.data.message == "success") {
             localStorage.setItem('access-user', JSON.stringify(result));
             window.localStorage.removeItem('register-user');
