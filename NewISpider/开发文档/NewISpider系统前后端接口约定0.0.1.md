@@ -1,6 +1,6 @@
 # NewISpider系统前后端接口约定
 
-> version: 0.0.1
+> version: 0.0.2
 
 本文档描述的是 NewISpider系统 的**前端页面和后端接口**之间的通讯方式. 后端各个模块之间的调用,不在本文档描述范围内.
 
@@ -9,7 +9,7 @@
 一般性约定作为系统的默认约定,是在相关接口文档未进行说明时的惯例和标准. 在和接口文档的本身的约定冲突时,以接口文档本身的定义为准
 
 * 字符集UTF-8
-* 接口至少支持POST方法
+* 接口至少支持GET/POST方法
 * CORS(Cross-Origin Resource Sharing) 跨域问题由后端处理
 * 跳转问题由前端处理
 * 请求体和返回体中使用1/0(整形)替代True/False(布尔类型)
@@ -23,6 +23,20 @@
   3. 返回{"message": "401"}  表示本次请求需要提供身份验证信息(原始的身份信息可能已过期,注意401是字符串格式)
   4. 返回{"message": "rejected"}  表示当前用户权限不足,操作被拒绝.
   5. 具体示范见*返回体示例*
+
+## 请求参数约定
+
+**查询**请求
+
+* 方法: GET
+* 参数位置: 请求参数保存在请求体的**args**中
+
+**添加, 修改, 删除**请求
+
+* 方法: POST
+* 参数位置: 请求参数保存在请求体的**json**中
+* 注意
+
 
 ### 示例
 
@@ -238,4 +252,30 @@ $.post(url, args, function(resp){
         var results = data['results'];   // 数据集       
     }
 });
+```
+
+
+```javascript
+
+var header = {
+    "authorization": authorization,
+}
+var args = {"id": id};
+$.post(url, headers, args, function(){
+
+})
+```
+```python
+"""权限检查"""
+def before(request){
+    ....
+    erturn {"user_id": 1, "hotel_id": 1};
+}
+```
+
+```python
+"""视图函数"""
+class View:
+    def post(request):
+    checked = before(request);
 ```
