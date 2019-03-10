@@ -143,11 +143,14 @@
       };
     },
     created() {
-      let reg_user = JSON.parse(window.localStorage.getItem('register-user'));
+      let reg_user = JSON.parse(window.sessionStorage.getItem('register-user'));
       if (reg_user) {
         this.account.username = reg_user.username;
         this.account.pwd = '';
         this.pwdFocus = true;
+      }
+      else{
+        console.log("没有发现")
       }
     },
     methods: {
