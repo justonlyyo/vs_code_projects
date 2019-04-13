@@ -1,0 +1,30 @@
+# 预订单、入住单RPC
+- 用户信息
+```
+user_info = {
+    "user_id": 28,
+    "user_name": "root_hotel",
+    "hotel_id": 6,
+    "hotel_group_id": 4,
+    "root_level": 3,
+    "expire": 1554908018
+}
+```
+
+###  1、根据预定单号查询预订单：
+
+```
+    def reserve_list(order_list: list, user_info: dict):
+        """
+        根据订单号查询订单
+        :param order_list:  订单列表　->列表
+        :param user_info: user 信息　->字典
+        :return:
+        """
+```
+实例：
+```
+s = Server1()
+print(s.reserve_list(['B1554796552446864', "B1554951543380885"], user_info))
+```
+
